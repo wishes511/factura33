@@ -262,6 +262,7 @@ public class Cfdi {
             lista.add(df.getString("precio_u"));
             lista.add(df.getString("impuestos"));
             lista.add(df.getString("importe"));
+            
         }
         df.close();
         smt.close();
