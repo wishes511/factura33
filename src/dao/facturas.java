@@ -19,4 +19,5 @@ public interface facturas {
     public void actualizar_fact(int check, int valor); 
     public void actualizar_fact_texto(int clave,String obs);
     public Connection getconect();
+    public boolean isregister(String folio, String emisor);
 }

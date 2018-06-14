@@ -147,6 +147,25 @@ public class Cfdi {
         return campo;
     }
 
+        public boolean buscaxmlrepetido(String folio, String emisor) throws ClassNotFoundException, SQLException {
+        boolean flag = false;
+        Statement smt;
+        ResultSet df;
+        String query = null;
+        query = "SELECT clave_factura\n"
+                + "FROM factura\n"
+                + "WHERE folio='"+folio+"' and emisor ='"+emisor+"'";
+        abrir();
+        smt = conexion.createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {
+            flag = true;
+        }
+        df.close();
+        smt.close();
+        return flag;
+    }
+    
     public String autosearchprod(String campo) throws ClassNotFoundException, SQLException {
         boolean flag = false;
         Statement smt;

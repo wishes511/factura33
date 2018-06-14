@@ -87,6 +87,25 @@ public class Facturadao extends Cfdi implements facturas {
         }
         return getConexion();
     }
+    public void isregister(int clave, String obs) {
+        try {
+            update_estado_obs(clave,obs);
+        } catch (SQLException ex) {
+            Logger.getLogger(Facturadao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    @Override
+    public boolean isregister(String folio, String emisor) {
+        boolean copia=false;
+        try {
+            buscaxmlrepetido(folio,emisor);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Facturadao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Facturadao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return copia;
+    }
     
 }

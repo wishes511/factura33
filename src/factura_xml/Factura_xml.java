@@ -119,7 +119,7 @@ public class Factura_xml {
     return arr;
     }
     public void cargacfdi() throws FileNotFoundException, IOException{
-        FileInputStream file = new FileInputStream(new File("cfdi.xls")); //ruta del archivo xls o xlsx
+       // FileInputStream file = new FileInputStream(new File("cfdi.xls")); //ruta del archivo xls o xlsx
   }
     public ArrayList<String> Inicio(ArrayList<String> arr,Element rootNode){
                ArrayList<String> linicio= lista_inicio();

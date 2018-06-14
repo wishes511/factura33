@@ -45,21 +45,7 @@ private JScrollPane elsp;
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Factura", "XML");
         filechooser.setFileFilter(filtro);
         this.getContentPane().add(filechooser,BorderLayout.CENTER);
-        jButton1.requestFocus();
-//int y=0;
-//int x=50;
-//for(int i =0; i <10 ;i++){
-// panel.add(boton=new JButton("OK"));
-// boton.setVisible(true);
-//  boton.setBounds(300,10,50,20);
-//boton.setLocation(300, y); 
-//boton.addActionListener(new Botones_actions(i));
-//y+=50;
-////x+=50;
-//}     
- 
-        
-        
+       jButton1.requestFocus();  
     }
 
     private class Botones_actions implements ActionListener{
@@ -83,8 +69,8 @@ private JScrollPane elsp;
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        resp = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabla = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -99,31 +85,54 @@ private JScrollPane elsp;
             }
         });
 
-        resp.setColumns(20);
-        resp.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
-        resp.setRows(5);
-        jScrollPane1.setViewportView(resp);
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Fecha", "Folio", "Emisor", "Metodo Pago", "Forma Pago", "Subtotal", "Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tabla);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1264, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -149,22 +158,30 @@ private JScrollPane elsp;
             
             Factura_xml fact = new Factura_xml();
             int conta=0;
-
+            model = new DefaultTableModel();
+        model = (DefaultTableModel) tabla.getModel();
+        this.model.getDataVector().clear();
             for(int i =0;i<archivos.length;i++){
-                
+
+
                 String xmp=archivos[i]+"";
                 if(xmp.charAt(xmp.length()-1) =='l'){
-                    System.out.println(i+"-"+conta);
+                    //System.out.println(i+"-"+conta);
                 files+=archivos[i]+"\n";
                 arr1.add(archivos[i].toString());
                 arr = fact.cargar_xml(archivos[i].toString());
                 Facturadao fdao = new Facturadao();
-                fdao.nuevo(arr);
+                String mensajerepetido="";
+                if(fdao.buscaxmlrepetido(arr.get(3), arr.get(15))){
+                mensajerepetido="Ya registrado";
+                }else fdao.nuevo(arr);
+                
+                String[] array = {arr.get(2),arr.get(3)+" - "+mensajerepetido,arr.get(15),arr.get(6),arr.get(4),arr.get(10),arr.get(13)};
                 files_doc+="Folio: "+arr.get(3)+" Fecha: "+arr.get(2)+"\n"+"Metodo pago: "+arr.get(6)+" Forma Pago: "+arr.get(4)+"\n"+"Emisor: "+
                         arr.get(15)+"\n";
                 int j;
                 int cont=0;
-            for ( j = 22; j < arr.size(); j++) {
+           /* for ( j = 22; j < arr.size(); j++) {
                if(cont ==6){
                     files_doc+="       Cantidad: "+arr.get(j-6)+"   Clave Producto: "+arr.get(j-5)+"   Clave Unidad: "+arr.get(j-4)+"   Descripcion "+arr.get(j-3)+
                             "   Valor Unitario: "+arr.get(j-1)+"   Impuestos: "+arr.get(j)+"   Importe: "+arr.get(j-2)+"\n";
@@ -172,7 +189,8 @@ private JScrollPane elsp;
                }else{
                    cont++;
                }
-            }
+            }*/
+                model.addRow(array);
                 arr.clear();
                 File dile=archivos[i];
                 dile.delete();
@@ -180,7 +198,8 @@ private JScrollPane elsp;
                 files_doc+="\n";
             //System.out.println(archivos[i]);
             }
-           resp.setText(files_doc);
+           //resp.setText(files_doc); //respuesta hacia un textarea
+           
 //          this.model.getDataVector().clear();
 //        final Class[] tiposColumnas = new Class[]{
 //            java.lang.String.class,
@@ -284,7 +303,7 @@ private JScrollPane elsp;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea resp;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }
