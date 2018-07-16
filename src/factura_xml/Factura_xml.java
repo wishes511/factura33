@@ -111,6 +111,7 @@ public class Factura_xml {
                 arr.add(elementcfdi1.getAttributeValue("RfcProvCertif"));
             }
         }
+        
     }catch ( IOException io ) {
         System.out.println( io.getMessage() );
     }   catch (JDOMException ex) {

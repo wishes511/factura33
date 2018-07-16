@@ -90,14 +90,14 @@ private JScrollPane elsp;
 
             },
             new String [] {
-                "Fecha", "Folio", "Emisor", "Metodo Pago", "Forma Pago", "Subtotal", "Total"
+                "Fecha", "Folio", "Emisor", "Metodo Pago", "Forma Pago", "Impuestos", "Subtotal", "Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -176,7 +176,7 @@ private JScrollPane elsp;
                 mensajerepetido="Ya registrado";
                 }else fdao.nuevo(arr);
                 
-                String[] array = {arr.get(2),arr.get(3)+" - "+mensajerepetido,arr.get(15),arr.get(6),arr.get(4),arr.get(10),arr.get(13)};
+                String[] array = {arr.get(2),arr.get(3)+" - "+mensajerepetido,arr.get(15),arr.get(6),arr.get(4),arr.get(arr.size()-4),arr.get(10),arr.get(13)};
                 files_doc+="Folio: "+arr.get(3)+" Fecha: "+arr.get(2)+"\n"+"Metodo pago: "+arr.get(6)+" Forma Pago: "+arr.get(4)+"\n"+"Emisor: "+
                         arr.get(15)+"\n";
                 int j;

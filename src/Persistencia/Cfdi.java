@@ -250,7 +250,7 @@ public class Cfdi {
             lista.add(df.getString("fecha"));
             lista.add(df.getString("formap"));
             lista.add(df.getString("u_cfdi"));
-            lista.add(df.getString("receptor"));
+            lista.add(df.getString("impuestos"));
             lista.add(df.getString("emisor"));
             lista.add(df.getString("subtotal"));
             lista.add(df.getString("total"));
@@ -297,7 +297,7 @@ public class Cfdi {
             abrir();
             conexion.setAutoCommit(false);
             String s = "insert into factura values('" + lista.get(2) + "','" + lista.get(4) + "','" + lista.get(20) + "','" + lista.get(18) + "','" + lista.get(15)
-                    + "',0," + lista.get(10) + ",0," + lista.get(13) + ",2,'','" + lista.get(3) + "')";
+                    + "',0," + lista.get(10) + ","+lista.get(lista.size()-4)+"," + lista.get(13) + ",2,'','" + lista.get(3) + "')";
             //System.out.println(s);
             st = conexion.prepareStatement(s);
             st.executeUpdate();

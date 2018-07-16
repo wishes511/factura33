@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -370,7 +372,7 @@ public class Extra_xml_ver extends javax.swing.JInternalFrame {
         parametros.put("f2",f2.getText());
         parametros.put("filtrado",filtrado.getText().toUpperCase());
         parametros.put("status",check_visto);
-        JasperReport jasper = (JasperReport) JRLoader.loadObject(getClass().getResource("../reporte/reporte.jasper"));
+        JasperReport jasper = (JasperReport) JRLoader.loadObject(getClass().getResource("reporte.jasper"));
         db.abrir();
         JasperPrint print = JasperFillManager.fillReport(jasper, parametros, db.getConexion());
         JasperViewer ver = new JasperViewer(print,false);
@@ -378,7 +380,8 @@ public class Extra_xml_ver extends javax.swing.JInternalFrame {
         ver.setVisible(true);
 } 
 catch(Exception e) 
-{ 
+{
+    JOptionPane.showMessageDialog(null,e.getCause());
     e.printStackTrace(); 
 }  
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -395,8 +398,22 @@ catch(Exception e)
         panelo.removeAll();
         for (int i = 0; i < lista.size(); i++) {
             if (cont == 10) {
-                labels += lista.get(i - 9) + "   FOLIO: " + lista.get(i) + "      " + lista.get(i - 8) + "     " + lista.get(i - 7) + "     RECEPTOR: " + lista.get(i - 6)
-                        + "     EMISOR: " + lista.get(i - 5) + "      SUBTOTAL: " + lista.get(i - 4) + "     TOTAL: " + lista.get(i - 3) + "     " + lista.get(i - 1) + " \n\n";
+                lista.get(i-5);
+                System.out.println(lista.get(i-5).length());
+                String aux="";
+                if(lista.get(i-5).length()>26){
+                for(int h =0;h<26;h++){
+                    aux+=lista.get(i-5).charAt(h);
+                }
+                }else{
+                for(int h =0;h<26;h++){
+                    if(h<lista.get(i-5).length()){
+                    aux+=lista.get(i-5).charAt(h);
+                    }else
+                    aux+=" ";
+                }
+                }
+                labels += lista.get(i - 9) + "   FOLIO: " + lista.get(i) + "      " + lista.get(i - 8) + "     " + lista.get(i - 7) + "    EMISOR: " + aux + "      SUBTOTAL: " + lista.get(i - 4) + "  IVA: "+lista.get(i-6)+"  TOTAL: " + lista.get(i - 3) + "     " + lista.get(i - 1) + " \n\n";
 
                 panelo.add(fila = new Label(labels));
                 fila.setVisible(true);
