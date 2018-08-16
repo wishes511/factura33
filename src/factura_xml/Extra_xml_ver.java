@@ -399,21 +399,36 @@ catch(Exception e)
         for (int i = 0; i < lista.size(); i++) {
             if (cont == 10) {
                 lista.get(i-5);
-                System.out.println(lista.get(i-5).length());
+                //System.out.println(lista.get(i-5).length());
                 String aux="";
                 if(lista.get(i-5).length()>26){
                 for(int h =0;h<26;h++){
                     aux+=lista.get(i-5).charAt(h);
                 }
                 }else{
-                for(int h =0;h<26;h++){
+                for(int h =0;h<27;h++){
                     if(h<lista.get(i-5).length()){
                     aux+=lista.get(i-5).charAt(h);
                     }else
-                    aux+=" ";
+                    aux+="   ";
                 }
                 }
-                labels += lista.get(i - 9) + "   FOLIO: " + lista.get(i) + "      " + lista.get(i - 8) + "     " + lista.get(i - 7) + "    EMISOR: " + aux + "      SUBTOTAL: " + lista.get(i - 4) + "  IVA: "+lista.get(i-6)+"  TOTAL: " + lista.get(i - 3) + "     " + lista.get(i - 1) + " \n\n";
+                String folioaux="";
+                if(lista.get(i).length()>9){
+                for(int h =0;h<9;h++){
+                    folioaux+=lista.get(i).charAt(h);
+                }
+                }else{
+                for(int h =0;h<9;h++){
+                    if(h<lista.get(i).length()){
+                    folioaux+=lista.get(i).charAt(h);
+                    }else
+                    folioaux+="  ";
+                }
+                }
+                System.out.println(lista.get(i-5).length()+" - "+aux.length());
+                System.out.println(lista.get(i).length()+" - "+folioaux.length());
+                labels += lista.get(i - 9) + "   FOLIO: " + folioaux + "      " + lista.get(i - 8) + "     " + lista.get(i - 7) + "    EMISOR: " + aux + "      SUBTOTAL: " + lista.get(i - 4) + "  IVA: "+lista.get(i-6)+"  TOTAL: " + lista.get(i - 3) + "     " + lista.get(i - 1) + " \n\n";
 
                 panelo.add(fila = new Label(labels));
                 fila.setVisible(true);
@@ -424,7 +439,7 @@ catch(Exception e)
                 texto.setText(lista.get(i - 1));
                 texto.setBounds(1120, 10, 70, 20);
                 texto.setLocation(1120, y);
-                texto.addActionListener(new Botones_actions1(Integer.parseInt(lista.get(i - 10)), texto.getText()));
+                texto.addActionListener(new Botones_actions1(Integer.parseInt(lista.get(i - 10)), texto.getText().toUpperCase()));
                 texto.setName("t" + i);
                 panelo.add(check = new Checkbox(""));
                 check.setVisible(true);
