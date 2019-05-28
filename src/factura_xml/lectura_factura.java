@@ -9,10 +9,16 @@ package factura_xml;
 import Persistencia.Cfdi;
 import java.awt.BorderLayout;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
@@ -49,6 +55,7 @@ public class lectura_factura extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
+        tablita();
     }
 
     /**
@@ -113,6 +120,7 @@ public class lectura_factura extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Examinador CFDI");
@@ -513,6 +521,14 @@ public class lectura_factura extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem3);
 
+        jMenuItem4.setText("Reloj checada");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -679,10 +695,34 @@ public class lectura_factura extends javax.swing.JFrame {
         this.setVisible(false);
         new Cfdi_xml().setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+//        copiaarchivos ca = new copiaarchivos();
+//        panes.add(ca);
+//        ca.setVisible(true);
+        Path resPathdbf = FileSystems.getDefault().getPath("H:\\sistemas\\dist\\reloj\\resp\\CASMOVRE.DBF");
+        Path resPathcdx = FileSystems.getDefault().getPath("H:\\sistemas\\dist\\reloj\\resp\\CASMOVRE.CDX");    
+        Path origenPathdbf = FileSystems.getDefault().getPath("H:\\sistemas\\dist\\reloj\\CASMOVRE.DBF");
+        Path origenPathcdx = FileSystems.getDefault().getPath("H:\\sistemas\\dist\\reloj\\CASMOVRE.CDX");
+        Path destinoPathdbf = FileSystems.getDefault().getPath("Q:\\reloj\\CASMOVRE.DBF");
+        Path destinoPathcdx = FileSystems.getDefault().getPath("Q:\\reloj\\CASMOVRE.CDX");
+        try {
+            Files.copy(destinoPathdbf, resPathdbf, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(destinoPathcdx, resPathcdx, StandardCopyOption.REPLACE_EXISTING);//respaldo de archivos
+            Files.copy(origenPathdbf, destinoPathdbf, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(origenPathcdx, destinoPathcdx, StandardCopyOption.REPLACE_EXISTING);
+            JOptionPane.showMessageDialog(null, "Copiado de archivos completo!", "ATHLETIC", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "No se pudo copiar debido a:\n"+e, "ATHLETIC", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Unidades para dar de alta: \n H:/sistemas/dist/reloj \n q:/reloj/casmovre", "ATHLETIC", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("");
+        }
+    
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 private void tablita(){
-tabla t = new tabla();
-        panes.add(t);
-        t.setVisible(true);
+//tabla1 t = new tabla1();
+//        panes.add(t);
+//        t.setVisible(true);
 }
     /**
      * @param args the command line arguments
@@ -756,6 +796,7 @@ tabla t = new tabla();
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

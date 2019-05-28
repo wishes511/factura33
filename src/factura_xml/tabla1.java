@@ -25,7 +25,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author gateway1
  */
-public class tabla extends javax.swing.JInternalFrame {
+public class tabla1 extends javax.swing.JInternalFrame {
 DefaultTableModel model = new DefaultTableModel();
 JButton boton;          
 JCheckBox check;
@@ -40,8 +40,8 @@ JTextField texto;
             java.lang.String.class,
             java.lang.String.class,
             java.lang.String.class,
-            JCheckBox.class,
-            JTextField.class // <- noten que aquí se especifica que la última columna es un botón
+            java.lang.String.class,
+            java.lang.String.class,// <- noten que aquí se especifica que la última columna es un botón
         };
                 String[] columnas = new String[]{
             "Activo",
@@ -65,32 +65,24 @@ JTextField texto;
     /**
      * Creates new form tabla
      */
-    public tabla() {
+    public tabla1() {
         initComponents();
         Object[][] datos1=new Object[2][22];
         int cont =0;
+        int aux=0;
         for(int k=0;k<22;k++){
-            System.out.println(cont);
-            if(cont <9){
-            datos1[0][k]=k+"-";    
-                cont++;
-            }else if(cont ==9 ){
-                
-                check=new JCheckBox();
-                check.addItemListener(new check_actions(1));
-                check.setSelected(true);
-             datos1[0][k]=check;
-             
-             System.out.println("aver asi");
-             cont++;
-            }else if( cont==10){
-                texto=new JTextField("eeeh we");
-             datos1[0][k]=texto;
+            if(cont==11){
+                cont=0;
+                aux++;
             }
+            System.out.println(cont+" "+aux);
+            datos1[aux][cont]=k+"-";    
+                cont++;
+            
             
         }
         for(int i =0;i<11;i++){
-            System.out.println(datos1[0][i]);
+            //System.out.println(datos1[0][i]);
         }
         this.model.getDataVector().clear();
         tablon.setModel(new javax.swing.table.DefaultTableModel(datos1,columnas){
@@ -161,6 +153,9 @@ JTextField texto;
                     for (int i = 0; i < tablon.getModel().getColumnCount(); i++) {
                         
                     }
+                    tablon.getModel();
+                    
+                    JOptionPane.showMessageDialog(null, tablon.getValueAt(fila, columna));
                     JOptionPane.showMessageDialog(null, "para el exto prro " + fila+" "+columna );
                 }
             }
